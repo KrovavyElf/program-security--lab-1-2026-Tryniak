@@ -1,0 +1,83 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Кінематографічна тема: темно-вугільний фон, тепло-білий текст, маркізні акценти */
+body {
+  @apply bg-charcoal-950 text-ink antialiased font-sans;
+}
+
+/* Афішні заголовки в стилі кінотеатральної маркізи: розріджений трекінг, умовний (condensed) шрифт */
+.marquee-heading {
+  @apply font-display tracking-wide;
+}
+
+::selection {
+  @apply bg-accent/30 text-ink;
+}
+
+/* Видима фокус-рамка для клавіатурної навігації (доступність) */
+:focus-visible {
+  outline: 2px solid theme('colors.marquee.DEFAULT');
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ------------------------------------------------------------------------
+   Кастомний скрол у стилі кінотеатральної маркізи — тонкий трек кольору
+   charcoal і "лампочковий" жовтий повзунок замість стандартного сірого
+   скролбару браузера. Firefox керується власністю scrollbar-width/-color,
+   Chromium/WebKit — псевдоелементами ::-webkit-scrollbar-*.
+   Застосовано глобально (весь сайт), плюс окремий тонший варіант
+   .scrollbar-marquee для горизонтальних афішних рядів і компактних панелей
+   адмінки, де 12px основного скролу виглядав би занадто важким.
+   ------------------------------------------------------------------------ */
+html {
+  scrollbar-width: thin;
+  scrollbar-color: theme('colors.charcoal.600') theme('colors.charcoal.950');
+}
+
+::-webkit-scrollbar {
+  width: 11px;
+  height: 11px;
+}
+::-webkit-scrollbar-track {
+  background: theme('colors.charcoal.950');
+}
+::-webkit-scrollbar-thumb {
+  background-color: theme('colors.charcoal.600');
+  border-radius: 999px;
+  border: 3px solid theme('colors.charcoal.950');
+}
+::-webkit-scrollbar-thumb:hover {
+  background-color: theme('colors.marquee.DEFAULT');
+}
+::-webkit-scrollbar-corner {
+  background: theme('colors.charcoal.950');
+}
+
+.scrollbar-marquee {
+  scrollbar-width: thin;
+  scrollbar-color: theme('colors.marquee.DEFAULT') transparent;
+}
+.scrollbar-marquee::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+.scrollbar-marquee::-webkit-scrollbar-track {
+  background: transparent;
+}
+.scrollbar-marquee::-webkit-scrollbar-thumb {
+  background-color: theme('colors.marquee.DEFAULT');
+  border-radius: 999px;
+  border: none;
+}
+.scrollbar-marquee::-webkit-scrollbar-thumb:hover {
+  background-color: theme('colors.accent.DEFAULT');
+}
